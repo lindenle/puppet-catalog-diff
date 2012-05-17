@@ -91,7 +91,10 @@ def compare_resources(old, new, unified)
         unless new_resource[:parameters] == resource[:parameters]
           if UNIFIED
             #Only print the diff of resources
-            puts Diffy::Diff.new(  string_resource(resource),  string_resource(new_resource), :diff => "-U 1000")
+            OLDSTRING=string_resource(resource)
+            NEWSTRING=string_resource(new_resource)
+            %x{diff -U 1000 <(echo -e "#{OLDSTRING}") <(echo -e "#{NEWSTRING}"}
+            #puts Diffy::Diff.new(  string_resource(resource),  string_resource(new_resource), :diff => "-U 1000")
           else
             puts "Old Resource:"
             puts string_resource(resource)
